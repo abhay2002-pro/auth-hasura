@@ -18,6 +18,10 @@ const execute = async (variables) => {
     "https://concrete-airedale-11.hasura.app/v1/graphql",
     {
       method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "x-hasura-admin-secret": "3MW1mI82c0G744EFNV3V91Qf8Uo41B9qBkp0TbvgrdHoLJjHniiKYA5Iop7y9qfG", 
+      },
       body: JSON.stringify({
         query: HASURA_OPERATION,
         variables
