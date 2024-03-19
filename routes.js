@@ -34,12 +34,12 @@ const execute = async (variables) => {
 };
 
 router.post('/InsertUser', async (req, res) => {
-    const { username, password } = req.body.input;
+    let { username, password } = req.body.input;
     console.log("username ", username)
     console.log("password ", password)
-    const hashedPassword = await bcrypt.hash(password, 10)
+    password = await bcrypt.hash(password, 10)
     console.log("hashedPassword ", hashedPassword)
-    const { data, errors } = await execute({ username, hashedPassword });
+    const { data, errors } = await execute({ username, password });
 
     if (errors) {
         return res.status(400).json(errors[0])
