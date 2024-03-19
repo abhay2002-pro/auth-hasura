@@ -1,8 +1,9 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
-import jwt from "jsonwebtoken"
-const router = express.Router()
+import jwt from "jsonwebtoken";
+
+const router = express.Router();
 
 const execute = async (variables, HASURA_OPERATION) => {
   const fetchResponse = await fetch(
@@ -30,42 +31,37 @@ router.post('/InsertUser', async (req, res) => {
 
     const HASURA_OPERATION = `
         mutation MyMutation($username: String!, $password: String!) {
-        insert_users(objects: {username: $username, password: $password}) {
+          insert_users(objects: {username: $username, password: $password}) {
             affected_rows
+          }
         }
-        }
-        `;
+    `;
 
     const { data, errors } = await execute({ username, password }, HASURA_OPERATION);
 
     if (errors) {
-        return res.status(400).json(errors[0])
+        return res.status(400).json(errors[0]);
     }
 
     return res.json({
         ...data.insert_users
-    })
+    });
 
 });
 
-// Request Handler
 router.post('/SignIn', async (req, res) => {
     const { username, password } = req.body.input;
 
-    console.log(username, password)
     const HASURA_OPERATION = `
-    query MyQuery($username: String!) {
+      query MyQuery($username: String!) {
         users(where: {username: {_eq: $username}}) {
-            id,
+          id,
           password
         }
       }      
-      `;
+    `;
       
     const { data, errors } = await execute({ username }, HASURA_OPERATION);
-    console.log(
-        "data", data
-    )
 
     if (errors) {
         return res.status(400).json(errors[0]);
@@ -77,23 +73,23 @@ router.post('/SignIn', async (req, res) => {
 
     const hashedPassword = data.users[0].password;
 
-    console.log("hashedPassword ", hashedPassword)
-
     const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
     if (!passwordMatch) {
         return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign("https://hasura.io/jwt/claims": {
-        "x-hasura-user-id": data.users[0].id,
-        "x-hasura-role": anonymous
-      }, '  EiFJxVA9lpE79tfjiUFCfzs0MzMV+Noi', {
+    const token = jwt.sign(
+      { "https://hasura.io/jwt/claims": {
+          "x-hasura-user-id": data.users[0].id,
+          "x-hasura-role": "user" 
+        }
+      }, 
+      'EiFJxVA9lpE79tfjiUFCfzs0MzMV+Noi', 
+      {
         expiresIn: '1h',
-    });
-
-        {
-            
+      }
+    );
 
     return res.json({
         accessToken: token
