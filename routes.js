@@ -4,7 +4,6 @@ import fetch from "node-fetch";
 
 const router = express.Router()
 
-
 const HASURA_OPERATION = `
 mutation MyMutation($username: String!, $password: String!) {
   insert_users(objects: {username: $username, password: $password}) {
@@ -37,8 +36,8 @@ router.post('/InsertUser', async (req, res) => {
     let { username, password } = req.body.input;
     console.log("username ", username)
     console.log("password ", password)
-    password = await bcrypt.hash(password, 10)
-    console.log("hashedPassword ", hashedPassword)
+    password = await bcrypt.hash(password, 10); // Hash the password
+    console.log("hashedPassword ", password); // Log the hashed password
     const { data, errors } = await execute({ username, password });
 
     if (errors) {
@@ -51,4 +50,4 @@ router.post('/InsertUser', async (req, res) => {
 
 });
 
-export default router
+export default router;
