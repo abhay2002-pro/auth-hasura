@@ -14,19 +14,19 @@ mutation MyMutation($username: String!, $password: String!) {
 `;
 
 const execute = async (variables) => {
-    const fetchResponse = await fetch(
-        "https://concrete-airedale-11.hasura.app/v1/graphql",
-        {
-            method: 'POST',
-            body: JSON.stringify({
-                query: HASURA_OPERATION,
-                variables
-            })
-        }
-    );
-    const data = await fetchResponse.json();
-    console.log('DEBUG: ', data);
-    return data;
+  const fetchResponse = await fetch(
+    "https://concrete-airedale-11.hasura.app/v1/graphql",
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        query: HASURA_OPERATION,
+        variables
+      })
+    }
+  );
+  const data = await fetchResponse.json();
+  console.log('DEBUG: ', data);
+  return data;
 };
 
 router.post('/InsertUser', async (req, res) => {
