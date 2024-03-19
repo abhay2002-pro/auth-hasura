@@ -85,9 +85,15 @@ router.post('/SignIn', async (req, res) => {
         return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ userId: data.users[0].id, role: "user" }, 'yourkey', {
+    const token = jwt.sign("https://hasura.io/jwt/claims": {
+        "x-hasura-user-id": data.users[0].id,
+        "x-hasura-role": anonymous
+      }, '  EiFJxVA9lpE79tfjiUFCfzs0MzMV+Noi', {
         expiresIn: '1h',
-        });
+    });
+
+        {
+            
 
     return res.json({
         accessToken: token
