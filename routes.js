@@ -1,7 +1,9 @@
-const express = require("express")
-const bcrypt = require("bcrypt")
+import express from "express";
+import bcrypt from "bcrypt";
+import fetch from "node-fetch";
+
 const router = express.Router()
-const fetch = require("node-fetch")
+
 
 const HASURA_OPERATION = `
 mutation MyMutation($username: String!, $password: String!) {
@@ -43,4 +45,4 @@ router.post('/InsertUser', async (req, res) => {
 
 });
 
-module.exports = router
+export default router
