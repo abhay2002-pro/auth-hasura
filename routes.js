@@ -83,8 +83,8 @@ router.post('/SignIn', async (req, res) => {
       { "https://hasura.io/jwt/claims": {
           "x-hasura-admin-secret": "3MW1mI82c0G744EFNV3V91Qf8Uo41B9qBkp0TbvgrdHoLJjHniiKYA5Iop7y9qfG",
           "x-hasura-user-id": data.users[0].id,
-          " x-hasura-allowed-roles":  ["admin", "user"],
-          "x-hasura-role": "user" 
+          "x-hasura-allowed-roles":  ["admin", "user"],
+          "x-hasura-default-role": "user"
         }
       }, 
       '3EK6FD+o0+c7tzBNVfjpMkNDi2yARAAKzQlk8O2IKoxQu4nF7EdAh8s3TwpHwrdWT6R', 
