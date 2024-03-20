@@ -85,7 +85,7 @@ router.post('/SignIn', async (req, res) => {
           "x-hasura-role": "user" 
         }
       }, 
-      'EiFJxVA9lpE79tfjiUFCfzs0MzMV+Noi', 
+      '3EK6FD+o0+c7tzBNVfjpMkNDi2yARAAKzQlk8O2IKoxQu4nF7EdAh8s3TwpHwrdWT6R', 
       {
         expiresIn: '1h',
       }
